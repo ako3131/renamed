@@ -1,6 +1,6 @@
-export type GamePhase = 'login' | 'lobby' | 'waiting' | 'rename' | 'guess' | 'reveal' | 'finished';
+export type GamePhase = 'waiting' | 'renaming' | 'guessing' | 'empty';
 
-export interface GameState {
+export interface Game {
     roomId: string;
     roomName: string;
     phase: GamePhase;
