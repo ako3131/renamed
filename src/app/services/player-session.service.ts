@@ -1,7 +1,9 @@
 import { User } from '../models/user.model';
 
+const USER_STORAGE_KEY = 'users';
+
 function loadUser(): User | null {
-    const userStateJson = localStorage.getItem('userState');
+    const userStateJson = localStorage.getItem(USER_STORAGE_KEY);
     if (userStateJson) {
         return JSON.parse(userStateJson) as User;
     }
@@ -9,19 +11,19 @@ function loadUser(): User | null {
 }
 
 function saveUser(user: User): void {
-    localStorage.setItem('userState', JSON.stringify(user));
+    localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
 }
 
 function createUser(username: string = ''): User {
     const playerId = crypto.randomUUID();
     const normalizedUsername = normalizeUsername(username, playerId);
-    const user: User = { playerId, username: normalizedUsername };
+    const user: User = { playerId, username: normalizedUsername, currentRoom: undefined };
     saveUser(user);
     return user;
 }
 
 function clearUser(): void {
-    localStorage.removeItem('user');
+    localStorage.removeItem(USER_STORAGE_KEY);
 }
 
 function normalizeUsername(username: string, playerId: string): string {
