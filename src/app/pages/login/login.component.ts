@@ -12,12 +12,12 @@ import { PlayerSessionService } from '../../services/player-session.service';
 })
 export class LoginComponent {
   readonly username = signal('');
-  readonly errorMessage = signal('')
+  readonly errorMessage = signal('');
 
   constructor(private router: Router) {}
 
   login(): void {
-    const username = this.username().trim()
+    const username = this.username().trim();
 
     if (!username) {
       this.errorMessage.set('Enter a username');
@@ -26,6 +26,6 @@ export class LoginComponent {
 
     PlayerSessionService.createUser(username);
 
-    // this.router.navigate(['/lobby']);
+    this.router.navigate(['/lobby']);
   }
 }

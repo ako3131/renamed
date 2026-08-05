@@ -1,15 +1,10 @@
 <main class="shell">
   <section class="panel">
     <header class="header">
-      <p class="eyebrow">Rename session</p>
-      <h1>Welcome to Rename</h1>
-      <p class="description">
-        Enter a username to join the game.
-      </p>
+      <h1>Ready to rename your friends?</h1>
     </header>
 
     <form class="card" (ngSubmit)="login()">
-      <h2>Player</h2>
 
       <label class="visually-hidden" for="username">
         Username
@@ -33,8 +28,5 @@
       </button>
     </form>
 
-    <p class="message" aria-live="polite">
-      {{ errorMessage() }}
-    </p>
   </section>
 </main>
