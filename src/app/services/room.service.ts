@@ -5,6 +5,7 @@ type RoomMap = Record<string, Game>;
 
 const ROOM_STORAGE_KEY = 'rooms';
 
+// Load preexisting rooms from local storage
 function loadRooms(): RoomMap {
     const roomsJson = localStorage.getItem(ROOM_STORAGE_KEY);
 
@@ -20,48 +21,41 @@ function loadRooms(): RoomMap {
     }
 }
 
+// Save all rooms into local storage
 function saveRooms(rooms: RoomMap): void {
     localStorage.setItem(ROOM_STORAGE_KEY, JSON.stringify(rooms));
 }
 
+// Add a room into the room map
 function saveRoom(game: Game): void {
     const rooms = loadRooms();
     rooms[game.roomName] = game;
     saveRooms(rooms);
 }
 
+// Load a room via code
 function loadRoom(roomCode: string): Game | null {
     const rooms = loadRooms();
-    return rooms[normalizeRoomCode(roomCode)] ?? null;
+    return rooms[roomCode] ?? null;
 }
 
+// Create a new room
 function createRoom(roomCode: string): Game | null {
     const roomId = crypto.randomUUID();
-    const normalizedRoomCode = normalizeRoomCode(roomCode);
-
-    if (!normalizedRoomCode) {
-        return null;
-    }
-
-    const game: Game = { roomId, roomName: normalizedRoomCode, phase: 'waiting', answers: [], players: [] };
+    const game: Game = { roomId, roomName: roomCode, phase: 'waiting', answers: [], players: [] };
     saveRoom(game);
     return game;
 }
 
+// Given a code, either create or join a preexisting room
 function createOrJoinRoom(roomCode: string, user: User): Game | null {
-    const normalizedRoomCode = normalizeRoomCode(roomCode);
-
-    if (!normalizedRoomCode) {
-        return null;
-    }
-
-    const existingRoom = loadRoom(normalizedRoomCode);
+    const existingRoom = loadRoom(roomCode);
 
     if (existingRoom) {
         return joinRoom(existingRoom, user);
     }
 
-    const newRoom = createRoom(normalizedRoomCode);
+    const newRoom = createRoom(roomCode);
 
     if (!newRoom) {
         return null;
@@ -70,23 +64,14 @@ function createOrJoinRoom(roomCode: string, user: User): Game | null {
     return joinRoom(newRoom, user);
 }
 
-function normalizeRoomCode(roomCode: string): string {
-    return roomCode.trim();
-}
-
+// Add a user to a game's player list
 function joinRoom(game: Game, user: User): Game {
-    const existingPlayerIndex = game.players.findIndex((player) => player.playerId === user.playerId);
-
-    if (existingPlayerIndex >= 0) {
-        game.players[existingPlayerIndex] = user;
-    } else {
-        game.players.push(user);
-    }
-
+    game.players.push(user);
     saveRoom(game);
     return game;
 }
 
+// Remove a user from a game's player list, if the game is empty delete it
 function leaveRoom(roomCode: string, playerId: string): Game | null {
     const room = loadRoom(roomCode);
 
@@ -105,17 +90,20 @@ function leaveRoom(roomCode: string, playerId: string): Game | null {
     return room;
 }
 
+// Close a room
 function closeRoom(roomCode: string): void {
     const rooms = loadRooms();
     delete rooms[roomCode];
     saveRooms(rooms);
 }
 
+// Get total active games
 function totalGames(): number {
     const rooms = loadRooms();
     return Object.keys(rooms).length;
 }
 
+// Get number of players in all games
 function totalPlayers(): number {
     const rooms = loadRooms();
     let playerCount = 0;
@@ -127,6 +115,7 @@ function totalPlayers(): number {
     return playerCount;
 }
 
+// Delete rooms (for testing)
 function clearRooms(): void {
     localStorage.removeItem(ROOM_STORAGE_KEY);
 }

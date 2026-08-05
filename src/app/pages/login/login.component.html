@@ -1,0 +1,40 @@
+<main class="shell">
+  <section class="panel">
+    <header class="header">
+      <p class="eyebrow">Rename session</p>
+      <h1>Welcome to Rename</h1>
+      <p class="description">
+        Enter a username to join the game.
+      </p>
+    </header>
+
+    <form class="card" (ngSubmit)="login()">
+      <h2>Player</h2>
+
+      <label class="visually-hidden" for="username">
+        Username
+      </label>
+
+      <input
+        id="username"
+        class="text-input"
+        type="text"
+        name="username"
+        [ngModel]="username()"
+        (ngModelChange)="username.set($event)"
+        placeholder="Enter a username"
+        autocomplete="off"
+        spellcheck="false"
+        required
+      />
+
+      <button class="action-button" type="submit">
+        Continue
+      </button>
+    </form>
+
+    <p class="message" aria-live="polite">
+      {{ errorMessage() }}
+    </p>
+  </section>
+</main>
