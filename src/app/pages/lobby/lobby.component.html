@@ -1,0 +1,40 @@
+<main class="shell">
+	<section class="panel">
+		<header class="header">
+			<div class="header-row">
+				<button class="back-button" type="button" (click)="returnToLogin()">
+					<span>Return to logout</span>
+				</button>
+			</div>
+			<h1>Welcome, {{ username }}</h1>
+			<p class="description">
+				Currently {{ totalPlayersStr }} renaming in {{ totalGamesStr }}
+			</p>
+		</header>
+
+		<section class="card" (ngSubmit)="enterGame()">
+			<label class="visually-hidden" for="room-action">
+				Join or create room
+			</label>
+
+			<input
+				id="roomname"
+				class="text-input"
+				type="text"
+				name="roomname"
+                [ngModel]="roomname()"
+                (ngModelChange)="roomname.set($event)"
+				placeholder="Enter a room name"
+				autocomplete="off"
+				spellcheck="false"
+                required
+			/>
+
+			<div class="actions">
+				<button class="action-button" type="button">
+					Join or Create Room
+				</button>
+			</div>
+		</section>
+	</section>
+</main>

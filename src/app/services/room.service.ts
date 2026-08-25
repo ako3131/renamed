@@ -121,13 +121,9 @@ function clearRooms(): void {
 }
 
 export const RoomService = {
-    loadRoom,
-    saveRoom,
-    createRoom,
     createOrJoinRoom,
     joinRoom,
     leaveRoom,
-    closeRoom,
     totalGames,
     totalPlayers,
     clearRooms
