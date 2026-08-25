@@ -6,7 +6,6 @@ export interface RoomPlayer {
 }
 
 export interface Game {
-    roomId: string;
     roomName: string;
     phase: GamePhase;
     answers: string[];

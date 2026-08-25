@@ -41,14 +41,14 @@ function loadRoom(roomCode: string): Game | null {
 
 // Create a new room
 function createRoom(roomCode: string): Game | null {
-    const roomId = crypto.randomUUID();
-    const game: Game = { roomId, roomName: roomCode, phase: 'waiting', answers: [], players: [] };
+    const game: Game = { roomName: roomCode, phase: 'waiting', answers: [], players: [] };
     saveRoom(game);
     return game;
 }
 
 // Given a code, either create or join a preexisting room
 function createOrJoinRoom(roomCode: string, user: User): Game | null {
+    console.log(' createing or joining room', roomCode);
     const existingRoom = loadRoom(roomCode);
 
     if (existingRoom) {
@@ -123,6 +123,7 @@ function clearRooms(): void {
 export const RoomService = {
     createOrJoinRoom,
     joinRoom,
+    loadRoom,
     leaveRoom,
     totalGames,
     totalPlayers,

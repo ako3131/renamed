@@ -12,8 +12,8 @@
 			</p>
 		</header>
 
-		<section class="card" (ngSubmit)="enterGame()">
-			<label class="visually-hidden" for="room-action">
+		<form class="card" (ngSubmit)="enterGame()">
+			<label class="visually-hidden" for="roomname">
 				Join or create room
 			</label>
 
@@ -31,10 +31,10 @@
 			/>
 
 			<div class="actions">
-				<button class="action-button" type="button">
+				<button class="action-button" type="submit">
 					Join or Create Room
 				</button>
 			</div>
-		</section>
+		</form>
 	</section>
 </main>

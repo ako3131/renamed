@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 
 import { LoginComponent } from './pages/login/login.component';
 import { LobbyComponent } from './pages/lobby/lobby.component';
+import { WaitingComponent } from './pages/waiting/waiting.component';
 
 export const routes: Routes = [
     {
@@ -11,5 +12,9 @@ export const routes: Routes = [
     {
         path: 'lobby',
         component: LobbyComponent
+    },
+    {
+        path: 'waiting/:roomname',
+        component: WaitingComponent
     }
 ];

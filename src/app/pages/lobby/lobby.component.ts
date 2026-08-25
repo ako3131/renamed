@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlayerSessionService } from '../../services/player-session.service';
 import { RoomService } from '../../services/room.service';
@@ -31,16 +32,21 @@ export class LobbyComponent {
     this.totalGamesStr = `${games} ${games === 1 ? 'game' : 'games'}`;
   }
 
-  enterGame(): void {
+  async enterGame(): Promise<void> {
+    console.log('cloicked')
     const roomname = this.roomname().trim();
 
     if (!roomname || !this.user) {
       return;
     }
 
-    RoomService.createOrJoinRoom(roomname, this.user);
+    const game = RoomService.createOrJoinRoom(roomname, this.user);
 
-    this.router.navigate(['/waiting']);
+    if (!game) return;
+
+    console.log('sneding to', game.roomName);
+
+    await this.router.navigate(['/waiting', game.roomName]);
   }
 
   returnToLogin(): void {
