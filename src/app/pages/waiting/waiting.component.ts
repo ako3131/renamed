@@ -30,4 +30,8 @@ export class WaitingComponent {
       void this.router.navigate(['/room', this.roomname, 'play']);
     }
   }
+
+  scoreForPlayer(playerId: string): number {
+    return this.game?.answers.find((answer) => answer.playerId === playerId)?.score ?? 0;
+  }
 }

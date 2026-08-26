@@ -1,0 +1,65 @@
+<main class="shell">
+  <section class="panel">
+    <header class="header">
+      <p class="eyebrow">Judging</p>
+      <h1>Vote on responses</h1>
+      @if (game) {
+        <p class="description">
+          Player {{ currentIndex + 1 }} of {{ game.answers.length }}
+        </p>
+      }
+    </header>
+
+    @if (currentAnswer && currentPlayer) {
+      <section class="card">
+        <table class="answer-table">
+          <thead>
+            <tr>
+              <th scope="col">Player</th>
+              <th scope="col">Answer</th>
+              <th scope="col">Accuracy Points</th>
+              <th scope="col">Vote</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (answer of currentAnswer.answers; track $index) {
+              <tr>
+                <th scope="row">{{ currentPlayer.username }}</th>
+                <td>{{ answer || 'No response' }}</td>
+                <td>{{ currentAnswer.score }}</td>
+                <td class="vote-cell">
+                  <button
+                    class="vote-button"
+                    type="button"
+                    (click)="vote('down')"
+                    [disabled]="currentVote === 'down'"
+                    aria-label="Downvote {{ currentPlayer.username }}'s answer"
+                  >
+                    ↓
+                  </button>
+                  <button
+                    class="vote-button"
+                    type="button"
+                    (click)="vote('up')"
+                    [disabled]="currentVote === 'up'"
+                    aria-label="Upvote {{ currentPlayer.username }}'s answer"
+                  >
+                    ↑
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </section>
+
+      <div class="actions pager-actions">
+        <button class="action-button" type="button" (click)="nextPlayer()">
+          {{ currentIndex + 1 === game?.answers?.length ? 'Finish judging' : 'Next player' }}
+        </button>
+      </div>
+    } @else {
+      <p class="description">No submitted answers are available to judge.</p>
+    }
+  </section>
+</main>

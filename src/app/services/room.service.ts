@@ -1,4 +1,4 @@
-import { Game, GamePhase } from '../models/game.model';
+import { Answer, Game, GamePhase, Vote } from '../models/game.model';
 import { User } from '../models/user.model';
 
 type RoomMap = Record<string, Game>;
@@ -110,6 +110,55 @@ function updatePhase(roomCode: string, phase: GamePhase): Game | null {
     return room;
 }
 
+// Save one answer for each player and move the room to the next phase.
+function submitAnswers(roomCode: string, answers: Answer[]): Game | null {
+    const room = loadRoom(roomCode);
+
+    if (!room) {
+        return null;
+    }
+
+    room.answers = answers;
+    room.phase = 'judging';
+    saveRoom(room);
+    return room;
+}
+
+// Record one player's vote for another player's submitted responses.
+function voteForAnswer(
+    roomCode: string,
+    answerPlayerId: string,
+    voterId: string,
+    vote: Vote,
+): Game | null {
+    const room = loadRoom(roomCode);
+
+    if (!room) {
+        return null;
+    }
+
+    const answer = room.answers.find((item) => item.playerId === answerPlayerId);
+
+    if (!answer) {
+        return null;
+    }
+
+    answer.votes ??= {};
+    const previousVote = answer.votes[voterId];
+
+    if (previousVote === vote) {
+        return room;
+    }
+
+    if (previousVote === 'up') answer.score -= 1;
+    if (previousVote === 'down') answer.score += 1;
+
+    answer.votes[voterId] = vote;
+    answer.score += vote === 'up' ? 1 : -1;
+    saveRoom(room);
+    return room;
+}
+
 // Close a room
 function closeRoom(roomCode: string): void {
     const rooms = loadRooms();
@@ -146,6 +195,8 @@ export const RoomService = {
     loadRoom,
     leaveRoom,
     updatePhase,
+    submitAnswers,
+    voteForAnswer,
     totalGames,
     totalPlayers,
     clearRooms

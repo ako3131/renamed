@@ -13,9 +13,12 @@
       <section class="card">
         <h2>Players ({{ room.players.length }})</h2>
 
-        <ul>
+        <ul class="player-list">
           @for (player of room.players; track player.playerId) {
-            <li>{{ player.username }}</li>
+            <li>
+              <span>{{ player.username }}</span>
+              <span class="player-score">{{ scoreForPlayer(player.playerId) }} pts</span>
+            </li>
           }
         </ul>
 

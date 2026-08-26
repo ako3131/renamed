@@ -1,0 +1,161 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #111;
+  background: #fff;
+}
+
+.shell {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+}
+
+.panel,
+.card {
+  display: grid;
+  gap: 1rem;
+}
+
+.panel {
+  width: min(100%, 920px);
+}
+
+.header h1,
+.description,
+.eyebrow,
+.vote-status {
+  margin: 0;
+}
+
+.header h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.05em;
+}
+
+.eyebrow {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.card {
+  border: 1px solid #111;
+  padding: 1rem;
+}
+
+.answer-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.answer-table th,
+.answer-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #111;
+  text-align: left;
+}
+
+.answer-table thead th {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.answer-table .vote-cell {
+  width: 5rem;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  white-space: nowrap;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.vote-button {
+  width: 2rem;
+  height: 2.25rem;
+  border: 1px solid #111;
+  background: #fff;
+  color: #111;
+  font: inherit;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.vote-button + .vote-button {
+  margin-left: 0.25rem;
+}
+
+.vote-button:hover:not(:disabled) {
+  background: #111;
+  color: #fff;
+}
+
+.action-button,
+.secondary-button {
+  border: 1px solid #111;
+  padding: 0.85rem 1rem;
+  background: #fff;
+  color: #111;
+  font: inherit;
+  cursor: pointer;
+}
+
+.action-button:hover:not(:disabled),
+.secondary-button:hover:not(:disabled) {
+  background: #111;
+  color: #fff;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+@media (max-width: 640px) {
+  .answer-table thead {
+    display: none;
+  }
+
+  .answer-table,
+  .answer-table tbody,
+  .answer-table tr,
+  .answer-table th,
+  .answer-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .answer-table tr {
+    padding: 0.5rem 0;
+  }
+
+  .answer-table th,
+  .answer-table td {
+    padding: 0.25rem 0;
+    border: 0;
+  }
+
+  .vote-button {
+    width: 100%;
+  }
+}

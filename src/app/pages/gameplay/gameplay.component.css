@@ -1,1 +1,245 @@
+:host {
+	display: block;
+	min-height: 100dvh;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #111;
+	background: #fff;
+}
 
+:host ::ng-deep body {
+	margin: 0;
+	min-height: 100dvh;
+	background: #fff;
+}
+
+.shell {
+	min-height: 100dvh;
+	display: grid;
+	place-items: center;
+	padding: 1.5rem;
+}
+
+.panel {
+	width: min(100%, 920px);
+	display: grid;
+	gap: 1.5rem;
+}
+
+.header {
+	display: grid;
+	gap: 0.65rem;
+}
+
+.header-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+.back-button {
+	border: 0;
+	padding: 0;
+	background: transparent;
+	color: inherit;
+	font: inherit;
+	font-size: 0.8rem;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+	white-space: nowrap;
+}
+
+.back-button:hover {
+	text-decoration: underline;
+	text-underline-offset: 0.2em;
+}
+
+.back-arrow {
+	font-size: 1rem;
+	line-height: 1;
+}
+
+.header h1 {
+	margin: 0;
+	font-size: clamp(2rem, 4vw, 3rem);
+	line-height: 1;
+	letter-spacing: -0.05em;
+}
+
+.eyebrow {
+	margin: 0 0 0.5rem;
+	font-size: 0.8rem;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+}
+
+.description {
+	max-width: 60ch;
+	margin: 0.75rem 0 0;
+	line-height: 1.5;
+}
+
+.timer {
+	margin: 0;
+	font-size: clamp(2rem, 5vw, 3.5rem);
+	font-variant-numeric: tabular-nums;
+	font-weight: 700;
+	letter-spacing: -0.05em;
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1rem;
+}
+
+.card {
+	border: 1px solid #111;
+	border-radius: 0;
+	padding: 1rem;
+	display: grid;
+	gap: 0.75rem;
+}
+
+.status-card p {
+	margin: 0;
+	font-size: 0.8rem;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+}
+
+.status-card span {
+	font-size: clamp(1.5rem, 3vw, 2.25rem);
+	font-weight: 700;
+	letter-spacing: -0.05em;
+}
+
+.text-input {
+	width: 100%;
+	border: 1px solid #111;
+	border-radius: 0;
+	padding: 0.85rem 0.95rem;
+	font: inherit;
+	font-size: 1rem;
+	color: #111;
+	background: #fff;
+	outline: none;
+}
+
+.text-input:focus {
+	outline: 2px solid #111;
+	outline-offset: 2px;
+}
+
+.player-table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.player-table th,
+.player-table td {
+	padding: 0.75rem 0;
+	border-bottom: 1px solid #111;
+	text-align: left;
+	vertical-align: middle;
+}
+
+.player-table thead th {
+	font-size: 0.8rem;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+}
+
+.player-table tbody th {
+	width: 35%;
+	font-weight: 700;
+}
+
+.completion-message {
+	margin: 0;
+	font-weight: 700;
+}
+
+.actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+}
+
+.action-button,
+.secondary-button {
+	border: 1px solid #111;
+	border-radius: 0;
+	padding: 0.85rem 1rem;
+	font: inherit;
+	font-size: 1rem;
+	cursor: pointer;
+	background: #fff;
+	color: #111;
+}
+
+.action-button:hover,
+.secondary-button:hover {
+	background: #111;
+	color: #fff;
+}
+
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+@media (max-width: 720px) {
+	.header-row {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+
+	.grid {
+		grid-template-columns: 1fr;
+	}
+
+	.player-table,
+	.player-table tbody,
+	.player-table tr,
+	.player-table th,
+	.player-table td {
+		display: block;
+		width: 100%;
+	}
+
+	.player-table thead {
+		display: none;
+	}
+
+	.player-table tbody tr {
+		padding: 0.75rem 0;
+		border-bottom: 1px solid #111;
+	}
+
+	.player-table th,
+	.player-table td {
+		padding: 0.25rem 0;
+		border: 0;
+	}
+
+	.actions {
+		flex-direction: column;
+	}
+
+	.action-button,
+	.secondary-button {
+		width: 100%;
+	}
+}

@@ -2,16 +2,53 @@
   <section class="panel">
     <header class="header">
       <h1>Game in {{ roomname }}</h1>
-      <p class="description">Game phase: {{ game?.phase ?? 'unavailable' }}</p>
+      <p class="description">Enter one response for each player before time runs out.</p>
+      <p class="timer" aria-live="polite">{{ timerLabel() }}</p>
     </header>
 
-    <section class="card">
-      <p>Add your gameplay controls here.</p>
+    <form class="card" (ngSubmit)="finishGame()">
+      <table class="player-table">
+        <thead>
+          <tr>
+            <th scope="col">Player</th>
+            <th scope="col">Response</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (player of players; track player.playerId) {
+            <tr>
+              <th scope="row">{{ player.username }}</th>
+              <td>
+                <label class="visually-hidden" [for]="'answer-' + player.playerId">
+                  Response for {{ player.username }}
+                </label>
+                <input
+                  class="text-input"
+                  [id]="'answer-' + player.playerId"
+                  [name]="'answer-' + player.playerId"
+                  type="text"
+                  [ngModel]="answers[player.playerId].answers[0]"
+                  (ngModelChange)="answers[player.playerId].answers[0] = $event"
+                  [disabled]="finished"
+                />
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      @if (finished) {
+        <p class="completion-message">Responses submitted.</p>
+      }
+
       <div class="actions">
-        <button class="action-button" type="button" (click)="returnToWaitingRoom()">
+        <button class="action-button" type="submit" [disabled]="finished">
+          Submit responses
+        </button>
+        <button class="secondary-button" type="button" (click)="returnToWaitingRoom()">
           Return to waiting room
         </button>
       </div>
-    </section>
+    </form>
   </section>
 </main>
