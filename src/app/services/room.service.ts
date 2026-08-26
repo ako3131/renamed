@@ -1,4 +1,4 @@
-import { Game } from '../models/game.model';
+import { Game, GamePhase } from '../models/game.model';
 import { User } from '../models/user.model';
 
 type RoomMap = Record<string, Game>;
@@ -97,6 +97,19 @@ function leaveRoom(roomCode: string, playerId: string): Game | null {
     return room;
 }
 
+// Update the screen every player in a room should see next
+function updatePhase(roomCode: string, phase: GamePhase): Game | null {
+    const room = loadRoom(roomCode);
+
+    if (!room) {
+        return null;
+    }
+
+    room.phase = phase;
+    saveRoom(room);
+    return room;
+}
+
 // Close a room
 function closeRoom(roomCode: string): void {
     const rooms = loadRooms();
@@ -132,6 +145,7 @@ export const RoomService = {
     joinRoom,
     loadRoom,
     leaveRoom,
+    updatePhase,
     totalGames,
     totalPlayers,
     clearRooms

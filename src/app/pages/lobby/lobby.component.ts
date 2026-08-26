@@ -1,6 +1,5 @@
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlayerSessionService } from '../../services/player-session.service';
 import { RoomService } from '../../services/room.service';
@@ -40,13 +39,7 @@ export class LobbyComponent {
       return;
     }
 
-    const game = RoomService.createOrJoinRoom(roomname, this.user);
-
-    if (!game) return;
-
-    console.log('sneding to', game.roomName);
-
-    await this.router.navigate(['/waiting', game.roomName]);
+    await this.router.navigate(['/room', roomname, 'waiting']);
   }
 
   returnToLogin(): void {

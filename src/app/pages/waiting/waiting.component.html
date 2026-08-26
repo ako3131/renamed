@@ -8,5 +8,25 @@
     <header class="header">
       <h1>You are in room {{ roomname }}</h1>
     </header>
+
+    @if (game; as room) {
+      <section class="card">
+        <h2>Players ({{ room.players.length }})</h2>
+
+        <ul>
+          @for (player of room.players; track player.playerId) {
+            <li>{{ player.username }}</li>
+          }
+        </ul>
+
+        <div class="actions">
+          <button class="action-button" type="button" (click)="startGame()">
+            Start game
+          </button>
+        </div>
+      </section>
+    } @else {
+      <p class="description">This room is no longer available.</p>
+    }
   </section>
 </main>

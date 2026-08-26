@@ -1,0 +1,17 @@
+<main class="shell">
+  <section class="panel">
+    <header class="header">
+      <h1>Game in {{ roomname }}</h1>
+      <p class="description">Game phase: {{ game?.phase ?? 'unavailable' }}</p>
+    </header>
+
+    <section class="card">
+      <p>Add your gameplay controls here.</p>
+      <div class="actions">
+        <button class="action-button" type="button" (click)="returnToWaitingRoom()">
+          Return to waiting room
+        </button>
+      </div>
+    </section>
+  </section>
+</main>
