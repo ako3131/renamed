@@ -32,11 +32,13 @@ export class WaitingComponent implements OnDestroy {
     this.playerid = this.user?.playerId ?? '';
 
     this.roomname = this.route.snapshot.paramMap.get('roomname') ?? '';
-    this.game = RoomService.loadRoom(this.roomname);
+
+    if (this.user && this.roomname) {
+        this.game = RoomService.createOrJoinRoom(this.roomname, this.user);
+    }
   }
 
   returnToLobby(): void {
-    RoomService.leaveRoom(this.roomname, this.playerid);
     this.router.navigate(['/lobby']);
   }
 

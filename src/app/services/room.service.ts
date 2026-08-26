@@ -66,8 +66,15 @@ function createOrJoinRoom(roomCode: string, user: User): Game | null {
 
 // Add a user to a game's player list
 function joinRoom(game: Game, user: User): Game {
-    game.players.push(user);
-    saveRoom(game);
+    const isAlreadyInRoom = game.players.some(
+        (player) => player.playerId === user.playerId,
+    );
+
+    if (!isAlreadyInRoom) {
+        game.players.push(user);
+        saveRoom(game);
+    }
+
     return game;
 }
 
