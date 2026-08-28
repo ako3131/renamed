@@ -1,27 +1,29 @@
 {
-    "services": {
-        "frontend": {
-            "root": ".",
-            "framework": "angular"
-        },
-        "backend": {
-            "root": "backend"
-        }
+  "services": {
+    "frontend": {
+      "root": ".",
+      "framework": "angular"
     },
-    "rewrites": [
-        {
-            "source": "/api(/.*)?",
-            "destination": {
-                "type": "service",
-                "service": "backend"
-            }
-        },
-        {
-            "source": "/(.*)",
-            "destination": {
-                "type": "service",
-                "service": "frontend"
-            }
-        }
-    ]
+    "backend": {
+      "root": "backend",
+      "framework": "fastapi",
+      "entrypoint": "main:app"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api(/.*)?",
+      "destination": {
+        "type": "service",
+        "service": "backend"
+      }
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "type": "service",
+        "service": "frontend"
+      }
+    }
+  ]
 }
