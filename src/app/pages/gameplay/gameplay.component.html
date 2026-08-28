@@ -5,6 +5,17 @@
       <p class="description">Enter one response for each player before time runs out.</p>
       <p class="timer" aria-live="polite">{{ timerLabel() }}</p>
     </header>
+    <header class="header">
+      <h1>You are in room {{ roomname }}</h1>
+        @if (category(); as roundCategory) {
+        <p class="category-name">Category: {{ roundCategory.name }}</p>
+        <p class="description">{{ roundCategory.prompt }}</p>
+        } @else if (categoryError()) {
+        <p class="description">Could not load a category.</p>
+        } @else {
+        <p class="description">Loading a random category…</p>
+        }
+    </header>
 
     <form class="card" (ngSubmit)="finishGame()">
       <table class="player-table">

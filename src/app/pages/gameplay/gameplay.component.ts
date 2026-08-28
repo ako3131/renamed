@@ -3,6 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Game, RoomPlayer, Answer } from '../../models/game.model';
 import { RoomService } from '../../services/room.service';
+import { Category } from '../../models/category.model';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-gameplay',
@@ -24,10 +26,16 @@ export class GameplayComponent implements OnInit, OnDestroy {
     return `${minutes}:${seconds}`;
   });
   finished = false;
+  readonly category = signal<Category | null>(null);
+  readonly categoryError = signal(false);
 
   private timerId: ReturnType<typeof setInterval> | null = null;
 
-  constructor(private readonly route: ActivatedRoute, private readonly router: Router) {
+  constructor(
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly categoryService: CategoryService
+  ) {
     this.roomname = this.route.parent?.snapshot.paramMap.get('roomname') ?? '';
     this.game = RoomService.loadRoom(this.roomname);
     this.players = this.game?.players ?? [];
@@ -39,7 +47,10 @@ export class GameplayComponent implements OnInit, OnDestroy {
         ],
       ),
     );
+    this.loadCategory();
   }
+  
+  
 
   ngOnInit(): void {
     this.timerId = setInterval(() => {
@@ -68,7 +79,7 @@ export class GameplayComponent implements OnInit, OnDestroy {
     if (game) {
       void this.router.navigate(['/room', this.roomname, 'judging']);
     }
-  }
+  };
 
   returnToWaitingRoom(): void {
     const game = RoomService.updatePhase(this.roomname, 'waiting');
@@ -76,12 +87,22 @@ export class GameplayComponent implements OnInit, OnDestroy {
     if (game) {
       void this.router.navigate(['/room', this.roomname, 'waiting']);
     }
-  }
+  };
 
   private stopTimer(): void {
     if (this.timerId !== null) {
       clearInterval(this.timerId);
       this.timerId = null;
     }
+  };
+
+  private loadCategory(): void {
+  this.categoryService.getRandomCategory().subscribe({
+      next: (category) => this.category.set(category),
+      error: (error) => {
+          console.error('Category request failed', error);
+          this.categoryError.set(true);
+      },
+  });
   }
 }

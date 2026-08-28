@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Game } from '../../models/game.model';
 import { RoomService } from '../../services/room.service';
@@ -14,7 +14,10 @@ export class WaitingComponent {
   game: Game | null = null;
   roomname = '';
 
-  constructor(private readonly router: Router, private readonly route: ActivatedRoute) {
+  constructor(
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
+  ) {
     this.roomname = this.route.parent?.snapshot.paramMap.get('roomname') ?? '';
     this.game = RoomService.loadRoom(this.roomname);
   }
