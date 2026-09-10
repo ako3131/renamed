@@ -16,7 +16,6 @@ function saveUser(user: User): void {
     localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
 }
 
-// Create a user
 function createUser(username: string): User {
     const playerId = crypto.randomUUID()
     const user: User = { playerId, username: username, currentRoom: undefined };
@@ -29,7 +28,6 @@ function clearUser(): void {
     localStorage.removeItem(USER_STORAGE_KEY);
 }
 
-// Change the username
 function updateUsername(newUsername: string): void {
         const user = loadUser();
         if (user) {

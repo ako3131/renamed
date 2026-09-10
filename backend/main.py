@@ -1,8 +1,9 @@
 from random import choice
 
 from fastapi import FastAPI
+from fastapi import HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from models import *
 
 app = FastAPI(title='Renamed API', version='0.1.0')
 
@@ -14,13 +15,7 @@ app.add_middleware(
     allow_headers=['*'],
 )
 
-
-class Category(BaseModel):
-    id: str
-    name: str
-    prompt: str
-
-
+# TODO: AI generated prompts
 CATEGORIES: tuple[Category, ...] = (
     Category(id='fruits', name='Fruits', prompt='Rename every player as a fruit.'),
     Category(id='animals', name='Animals', prompt='Rename every player as an animal.'),

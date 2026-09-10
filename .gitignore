@@ -9,6 +9,7 @@
 # Node
 /node_modules
 backend/.venv/
+backend/__pycache__/
 npm-debug.log
 yarn-error.log
 
